@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { ContainerBuilder } from "./modules/commons/domain/ioc/container.builder";
 import { CommonsModule } from "./modules/commons/commons.module";
+import { FeedsModule } from "./modules/feeds/feeds.module";
 import { ModuleLoader } from "./modules/commons/domain/modules/module.loader";
 import { ServerBuilder } from "./modules/commons/domain/server/server.builder";
 
@@ -9,6 +10,7 @@ async function bootstrap() {
 
     const moduleLoader = (new ModuleLoader([
         new CommonsModule(),
+        new FeedsModule()
     ], container));
 
     await moduleLoader.initialize()
