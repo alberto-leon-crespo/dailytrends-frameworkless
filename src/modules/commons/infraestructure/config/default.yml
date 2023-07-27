@@ -1,0 +1,7 @@
+app:
+  port: ${APP_PORT}
+database:
+  uri: ${DATABASE_MONGO_URL}
+  user: ${DATABASE_MONGO_USER}
+  password: ${DATABASE_MONGO_PASSWORD}
+  database: ${DATABASE_MONGO_NAME}
