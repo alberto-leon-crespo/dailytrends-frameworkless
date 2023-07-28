@@ -3,6 +3,7 @@ import { DomainFeedRepository } from "../../../domain/ports/domain.feed.reposito
 import { DomainFeed } from "../../../domain/domain.feed";
 import { FeedDocument } from "../schema/feed.schema";
 import { FeedMapperService } from "../../../domain/services/feed.mapper.service";
+import {Optional} from "typescript-optional";
 
 
 export class MongooseFeedRepository extends BaseRepository<DomainFeed, FeedDocument> implements DomainFeedRepository {
@@ -11,11 +12,11 @@ export class MongooseFeedRepository extends BaseRepository<DomainFeed, FeedDocum
         super(FeedDocument, feedMapperService);
     }
 
-    public createFeed(feed: DomainFeed): Promise<DomainFeed> {
+    public createFeed(feed: DomainFeed): Promise<Optional<DomainFeed>> {
         return this.create(feed);
     }
 
-    public deleteFeed(feedId: string): Promise<DomainFeed | null> {
+    public deleteFeed(feedId: string): Promise<Optional<DomainFeed>> {
         return this.delete(feedId);
     }
 
@@ -23,11 +24,11 @@ export class MongooseFeedRepository extends BaseRepository<DomainFeed, FeedDocum
         return this.getAll();
     }
 
-    public getFeed(id: string): Promise<DomainFeed | null> {
+    public getFeed(id: string): Promise<Optional<DomainFeed>> {
         return this.getDetail(id);
     }
 
-    public updateFeed(feedId: string, feed: DomainFeed): Promise<DomainFeed | null> {
+    public updateFeed(feedId: string, feed: DomainFeed): Promise<Optional<DomainFeed>> {
         return this.updateDocument(feedId, feed);
     }
 }

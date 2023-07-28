@@ -4,6 +4,8 @@ import { Types } from 'mongoose';
 import { MapperInterface } from "../../../commons/domain/mapper/mapper.interface";
 import { DomainFeed } from "../domain.feed";
 import { FeedDocument } from "../../infraestructure/adapters/schema/feed.schema";
+import { Optional } from "typescript-optional";
+import { FeedEntity } from "../../infraestructure/entity/feed.entity";
 
 @injectable()
 export class FeedMapperService implements MapperInterface<DomainFeed, FeedDocument> {
@@ -13,16 +15,24 @@ export class FeedMapperService implements MapperInterface<DomainFeed, FeedDocume
         this.feedModel = getModelForClass(FeedDocument);
     }
 
-    mapToDomain(feedSchema: FeedDocument): DomainFeed {
-        return new DomainFeed(feedSchema._id.toString(), feedSchema.name, feedSchema.url);
+    public toDomain(feedEntity: FeedEntity): Optional<DomainFeed> {
+        if (!feedEntity) {
+            return Optional.empty<DomainFeed>();
+        }
+        const feed = new DomainFeed(
+            feedEntity.id,
+            feedEntity.name,
+            feedEntity.url,
+        );
+        return Optional.of(feed);
     }
 
-    mapToDocument(domainFeed: DomainFeed): FeedDocument {
-        const feedDocument = new FeedDocument();
-        feedDocument._id = new Types.ObjectId(domainFeed.getId()),
-        feedDocument.id = domainFeed.getId(),
-        feedDocument.name = domainFeed.getName(),
-        feedDocument.url = domainFeed.getUrl()
-        return feedDocument;
+    public toDomains(feedEntities: FeedEntity[]): DomainFeed[] {
+        const feeds = new Array<DomainFeed>();
+        feedEntities.forEach((feedEntity) => {
+            const feed = this.toDomain(feedEntity);
+            feeds.push(feed.get());
+        });
+        return feeds;
     }
 }
