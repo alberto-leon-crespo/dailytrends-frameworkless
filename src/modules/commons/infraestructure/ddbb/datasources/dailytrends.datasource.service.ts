@@ -1,39 +1,32 @@
 import { injectable } from 'inversify';
 import mongoose from 'mongoose';
-import {ConfigService} from "../../domain/services/config.service";
-import {CommonsModule} from "../../commons.module";
-import {LoggerService} from "../../domain/services/logger.service";
+import {ConfigService} from "../../../domain/services/config.service";
+import {CommonsModule} from "../../../commons.module";
+import {LoggerService} from "../../../domain/services/logger.service";
 
 @injectable()
 export class DailytrendsDatasourceService {
 
-    public connection!: mongoose.Connection;
+    public connection!: typeof mongoose;
 
     constructor(private configService: ConfigService, private loggerService: LoggerService) {}
 
-    public initializeConnection(): Promise<void> {
-        return new Promise((resolve, reject) => {
-            const mongoUri = this.configService.getModuleConfig(CommonsModule.name, 'database.uri');
-            const db = this.configService.getModuleConfig(CommonsModule.name, 'database.database');
-            this.connection = mongoose.createConnection(
+    public async initializeConnection(): Promise<void> {
+        const mongoUri = this.configService.getModuleConfig(CommonsModule.name, 'database.uri');
+        const db = this.configService.getModuleConfig(CommonsModule.name, 'database.database');
+        try {
+            this.connection = await mongoose.connect(
                 mongoUri,
                 {
                     useNewUrlParser: true,
                     useUnifiedTopology: true
                 } as any
             );
-            console.log(mongoUri);
-            this.connection.useDb(db);
-
-            this.connection.once('error', error => {
-                this.loggerService.error('Error while connecting to MongoDB:', error);
-                reject(error);
-            });
-
-            this.connection.once('open', () => {
-                this.loggerService.info('Connected successfully to MongoDB!');
-                resolve();
-            });
-        });
+            // Disabling bufferCommands to prevent buffer error. See on https://mongoosejs.com/docs/connections.html
+            this.connection.set('bufferCommands', false);
+            this.loggerService.info('Connected successfully to MongoDB!');
+        } catch (error: any) {
+            this.loggerService.error('Error while connecting to MongoDB:', error);
+        }
     }
 }
