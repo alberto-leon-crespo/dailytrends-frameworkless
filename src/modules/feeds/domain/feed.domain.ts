@@ -1,27 +1,40 @@
-export class DomainFeed {
-    private id: string;
-    private name: string;
-    protected url: string;
+export class FeedDomain {
+    private _id: string;
+    private _name: string;
+    private _url: string;
 
     public constructor(
         id: string,
         name: string,
         url: string,
     ) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
+        this._id = id;
+        this._name = name;
+        this._url = url;
     }
 
     public getName(): string {
-        return this.name;
+        return this._name;
     }
 
     public getId(): string {
-        return this.id;
+        return this._id;
     }
 
     public getUrl(): string {
-        return this.url;
+        return this._url;
+    }
+
+
+    public setId(value: string) {
+        this._id = value;
+    }
+
+    public setName(value: string) {
+        this._name = value;
+    }
+
+    public setUrl(value: string) {
+        this._url = value;
     }
 }

@@ -1,18 +1,18 @@
-import { DomainFeed } from '../domain.feed';
+import { FeedDomain } from '../feed.domain';
 import {Optional} from "typescript-optional";
 
-export interface DomainFeedRepository {
-    getAllFeeds(): Promise<DomainFeed[]>;
+export interface FeedDomainRepository {
+    getAllFeeds(): Promise<FeedDomain[]>;
     /**
      * Returns feed filtered by id
      * @returns a `Feed` object containing the data.
      * @param id string
      */
-    getFeed(id: string): Promise<Optional<DomainFeed>>;
+    getFeed(id: string): Promise<Optional<FeedDomain>>;
 
-    createFeed(feed: DomainFeed): Promise<Optional<DomainFeed>>;
+    createFeed(feed: FeedDomain): Promise<Optional<FeedDomain>>;
 
-    deleteFeed(feedId: string): Promise<Optional<DomainFeed>>;
+    deleteFeed(feedId: string): Promise<Optional<FeedDomain>>;
 
-    updateFeed(feedId: string, feed: DomainFeed): Promise<Optional<DomainFeed>>;
+    updateFeed(feedId: string, feed: FeedDomain): Promise<Optional<FeedDomain>>;
 }

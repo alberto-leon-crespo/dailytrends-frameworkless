@@ -1,17 +1,17 @@
 import { prop, getModelForClass, modelOptions } from '@typegoose/typegoose';
 import { Types, Document } from 'mongoose';
-@modelOptions({ schemaOptions: { collection: 'feeds' } })
+@modelOptions({ schemaOptions: { collection: 'feeds',  } })
 export class FeedDocument extends Document {
-    @prop({ required: true })
+    @prop()
     _id!: Types.ObjectId;
 
-    @prop({ required: true })
+    @prop()
     id!: string;
 
-    @prop()
+    @prop({ required: true })
     name!: string;
 
-    @prop()
+    @prop({ required: true })
     url!: string;
 }
 

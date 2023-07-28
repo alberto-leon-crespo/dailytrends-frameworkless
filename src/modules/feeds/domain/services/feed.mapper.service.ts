@@ -1,38 +1,48 @@
 import { getModelForClass } from '@typegoose/typegoose';
-import { injectable, inject } from 'inversify';
-import { Types } from 'mongoose';
+import { injectable } from 'inversify';
 import { MapperInterface } from "../../../commons/domain/mapper/mapper.interface";
-import { DomainFeed } from "../domain.feed";
+import { FeedDomain } from "../feed.domain";
 import { FeedDocument } from "../../infraestructure/adapters/schema/feed.schema";
+import { FeedModel } from "../../infraestructure/adapters/schema/feed.schema";
 import { Optional } from "typescript-optional";
 import { FeedEntity } from "../../infraestructure/entity/feed.entity";
+import {Types} from "mongoose";
 
 @injectable()
-export class FeedMapperService implements MapperInterface<DomainFeed, FeedDocument> {
+export class FeedMapperService implements MapperInterface<FeedEntity, FeedDomain, FeedDocument> {
     private feedModel;
 
     constructor() {
         this.feedModel = getModelForClass(FeedDocument);
     }
 
-    public toDomain(feedEntity: FeedEntity): Optional<DomainFeed> {
+    public toDomain(feedEntity: FeedEntity): Optional<FeedDomain> {
         if (!feedEntity) {
-            return Optional.empty<DomainFeed>();
+            return Optional.empty<FeedDomain>();
         }
-        const feed = new DomainFeed(
-            feedEntity.id,
+        const feed = new FeedDomain(
+            feedEntity._id,
             feedEntity.name,
             feedEntity.url,
         );
         return Optional.of(feed);
     }
 
-    public toDomains(feedEntities: FeedEntity[]): DomainFeed[] {
-        const feeds = new Array<DomainFeed>();
+    public toDomains(feedEntities: FeedEntity[]): FeedDomain[] {
+        const feeds = new Array<FeedDomain>();
         feedEntities.forEach((feedEntity) => {
             const feed = this.toDomain(feedEntity);
             feeds.push(feed.get());
         });
         return feeds;
     }
+
+    public toSchema(domainFeed: FeedDomain): FeedDocument {
+        return new FeedModel({
+            _id: new Types.ObjectId(domainFeed.getId()),
+            name: domainFeed.getName(),
+            url: domainFeed.getUrl(),
+        });
+    }
+
 }
