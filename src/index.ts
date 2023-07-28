@@ -4,6 +4,7 @@ import { CommonsModule } from "./modules/commons/commons.module";
 import { FeedsModule } from "./modules/feeds/feeds.module";
 import { ModuleLoader } from "./modules/commons/domain/modules/module.loader";
 import { ServerBuilder } from "./modules/commons/domain/server/server.builder";
+import { LoggerService } from "./modules/commons/domain/services/logger.service";
 
 async function bootstrap() {
     const container = ContainerBuilder.build({autoBindInjectable: true});
@@ -18,7 +19,8 @@ async function bootstrap() {
     const serverInstance = ServerBuilder.build(container, {rootPath: "/api"})
 
     serverInstance.listen(3000, 'localhost', () => {
-        console.log('Server started on port 3000 :)');
+        const logger = container.get<LoggerService>(LoggerService);
+        logger.info('Server started on port 3000 :)');
     });
 
     return container;
