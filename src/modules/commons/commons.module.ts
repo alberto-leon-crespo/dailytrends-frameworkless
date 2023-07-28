@@ -7,7 +7,7 @@ import path from "path";
 
 export class CommonsModule implements ModuleInitializatorInterface {
     public async initialize(container: interfaces.Container): Promise<void> {
-        let moduleContainer = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
+        const moduleContainer = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
             bind<ConfigService>(ConfigService).toSelf();
             bind<LoggerService>(LoggerService).toSelf();
             bind<DailytrendsDatasourceService>(DailytrendsDatasourceService).toSelf();
