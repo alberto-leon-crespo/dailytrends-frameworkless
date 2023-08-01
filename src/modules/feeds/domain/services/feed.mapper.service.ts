@@ -6,7 +6,7 @@ import { FeedDocument } from "../../infraestructure/adapters/schema/feed.schema"
 import { FeedModel } from "../../infraestructure/adapters/schema/feed.schema";
 import { Optional } from "typescript-optional";
 import { FeedEntity } from "../../infraestructure/entity/feed.entity";
-import {Types} from "mongoose";
+import { Types } from "mongoose";
 
 @injectable()
 export class FeedMapperService implements MapperInterface<FeedEntity, FeedDomain, FeedDocument> {
@@ -24,6 +24,7 @@ export class FeedMapperService implements MapperInterface<FeedEntity, FeedDomain
             feedEntity._id,
             feedEntity.name,
             feedEntity.url,
+            feedEntity.selectors,
         );
         return Optional.of(feed);
     }
@@ -42,6 +43,7 @@ export class FeedMapperService implements MapperInterface<FeedEntity, FeedDomain
             _id: new Types.ObjectId(domainFeed.getId()),
             name: domainFeed.getName(),
             url: domainFeed.getUrl(),
+            selectors: domainFeed.getSelectors(),
         });
     }
 

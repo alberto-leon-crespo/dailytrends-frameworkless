@@ -1,40 +1,52 @@
+import { FeedSelectorsInterface } from "./interface/feed-selectors.interface";
+
 export class FeedDomain {
-    private _id: string;
-    private _name: string;
-    private _url: string;
+    private id: string;
+    private name: string;
+    private url: string;
+    private selectors: FeedSelectorsInterface;
 
     public constructor(
         id: string,
         name: string,
         url: string,
+        selectors: FeedSelectorsInterface,
     ) {
-        this._id = id;
-        this._name = name;
-        this._url = url;
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.selectors = selectors;
     }
 
     public getName(): string {
-        return this._name;
+        return this.name;
     }
 
     public getId(): string {
-        return this._id;
+        return this.id;
     }
 
     public getUrl(): string {
-        return this._url;
+        return this.url;
     }
 
+    public getSelectors(): FeedSelectorsInterface {
+        return this.selectors;
+    }
 
     public setId(value: string) {
-        this._id = value;
+        this.id = value;
     }
 
     public setName(value: string) {
-        this._name = value;
+        this.name = value;
     }
 
     public setUrl(value: string) {
-        this._url = value;
+        this.url = value;
+    }
+
+    public setSelectors(value: FeedSelectorsInterface) {
+        this.selectors = value;
     }
 }
