@@ -23,6 +23,7 @@
     "inversify-binding-decorators": "^4.0.0",
     "inversify-express-utils": "^6.4.3",
     "lodash": "^4.17.21",
+    "mongodb-migrations": "^0.8.5",
     "mongoose": "^7.4.1",
     "node-config": "^0.0.2",
     "pino-http": "^8.3.3",
