@@ -3,9 +3,9 @@ import { FeedDomainRepository } from "../../../domain/ports/feed.domain.reposito
 import { FeedDomain } from "../../../domain/feed.domain";
 import { FeedDocument } from "../schema/feed.schema";
 import { Optional } from "typescript-optional";
-import { inject, injectable, unmanaged } from "inversify";
-import {FeedMapperService} from "../../../domain/services/feed.mapper.service";
-import {FeedEntity} from "../../entity/feed.entity";
+import { injectable } from "inversify";
+import { FeedMapperService } from "../../../domain/services/feed.mapper.service";
+import { FeedEntity } from "../../entity/feed.entity";
 
 @injectable()
 export class MongooseFeedRepository extends BaseRepository<FeedEntity, FeedDomain, FeedDocument> implements FeedDomainRepository {
