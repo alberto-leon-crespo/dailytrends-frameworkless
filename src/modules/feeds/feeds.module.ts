@@ -7,9 +7,11 @@ import { GetAllFeedsQuery } from "./application/queries/get-all-feeds.query";
 import { GetFeedByIdQuery } from "./application/queries/get-feed-by-id.query";
 import { CreateFeedCommand } from "./application/commands/create-feed.command";
 import { UpdateFeedCommand } from "./application/commands/update-feed.command";
+import { ModuleInitializatorInterface } from "../commons/domain/modules/interfaces/module.initializator.interface";
 import path from 'path';
+import {DeleteFeedCommand} from "./application/commands/delete-feed.command";
 
-export class FeedsModule {
+export class FeedsModule implements ModuleInitializatorInterface {
     public async initialize(container: interfaces.Container): Promise<void> {
         const moduleContainer = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
             bind<FeedController>(FeedController).toSelf();
@@ -19,6 +21,7 @@ export class FeedsModule {
             bind<GetFeedByIdQuery>(GetFeedByIdQuery).toSelf();
             bind<CreateFeedCommand>(CreateFeedCommand).toSelf();
             bind<UpdateFeedCommand>(UpdateFeedCommand).toSelf();
+            bind<DeleteFeedCommand>(DeleteFeedCommand).toSelf();
         });
         container.load(moduleContainer);
         const configService = container.get<ConfigService>(ConfigService);

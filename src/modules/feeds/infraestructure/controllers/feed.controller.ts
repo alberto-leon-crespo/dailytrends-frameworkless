@@ -20,6 +20,7 @@ import { CreateFeedDto } from "../dtos/create-feed.dto";
 import { LoggerService } from "../../../commons/domain/services/logger.service";
 import { Optional } from "typescript-optional";
 import { UpdateFeedCommand } from "../../application/commands/update-feed.command";
+import { DeleteFeedCommand } from "../../application/commands/delete-feed.command";
 
 @controller("/feeds")
 export class FeedController extends BaseHttpController implements interfaces.Controller {
@@ -29,6 +30,7 @@ export class FeedController extends BaseHttpController implements interfaces.Con
         @inject(GetFeedByIdQuery) private readonly getFeedByIdQuery: GetFeedByIdQuery,
         @inject(CreateFeedCommand) private readonly createFeedCommand: CreateFeedCommand,
         @inject(UpdateFeedCommand) private readonly updateFeedCommand: UpdateFeedCommand,
+        @inject(DeleteFeedCommand) private readonly deleteFeedCommand: DeleteFeedCommand,
         @inject(LoggerService) private readonly loggerService: LoggerService,
     ) {
         super();
@@ -80,10 +82,8 @@ export class FeedController extends BaseHttpController implements interfaces.Con
     }
 
     @httpDelete("/:id")
-    private delete(@requestParam("id") id: string, @response() res: express.Response) {
-        res.sendStatus(200).send({
-            status: 200,
-            message: `Feed ${id} deleted correctly`
-        }).end();
+    private async delete(@requestParam("id") id: string, @response() res: express.Response) {
+        await this.deleteFeedCommand.run(id);
+        res.sendStatus(204);
     }
 }
