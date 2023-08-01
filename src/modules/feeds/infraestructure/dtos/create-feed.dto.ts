@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
+import { FeedSelectorsInterface } from "../../domain/interface/feed-selectors.interface";
 
 export class CreateFeedDto {
     @IsOptional()
@@ -9,4 +10,7 @@ export class CreateFeedDto {
 
     @IsNotEmpty()
     url!: string;
+
+    @IsNotEmpty()
+    selectors!: FeedSelectorsInterface;
 }

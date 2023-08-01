@@ -15,6 +15,6 @@ export class UpdateFeedCommand implements UsecaseInterface {
 
     public async run(id: string, feed: CreateFeedDto): Promise<Optional<FeedDomain>> {
         const feedData: FeedDomain = await this.getFeedByIdQuery.run(id) as unknown as FeedDomain;
-        return this.mongooseFeedRepository.updateFeed(id, new FeedDomain(feed._id, feed.name, feed.url));
+        return this.mongooseFeedRepository.updateFeed(id, new FeedDomain(feed._id, feed.name, feed.url, feed.selectors));
     }
 }
