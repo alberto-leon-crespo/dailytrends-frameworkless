@@ -22,6 +22,8 @@ import { Optional } from "typescript-optional";
 import { UpdateFeedCommand } from "../../application/commands/update-feed.command";
 import { DeleteFeedCommand } from "../../application/commands/delete-feed.command";
 import {container} from "../../../../bootstrap";
+import {GetNewsByFeedIdQuery} from "../../../news/application/queries/get-news-by-feed-id.query";
+import {NewDomain} from "../../../news/domain/new.domain";
 
 @controller("/feeds")
 export class FeedController extends BaseHttpController implements interfaces.Controller {
@@ -31,6 +33,7 @@ export class FeedController extends BaseHttpController implements interfaces.Con
     private readonly createFeedCommand: CreateFeedCommand;
     private readonly updateFeedCommand: UpdateFeedCommand;
     private readonly deleteFeedCommand: DeleteFeedCommand;
+    private readonly getNewsByFeedIdQuery: GetNewsByFeedIdQuery;
     private readonly loggerService: LoggerService;
 
     constructor() {
@@ -40,11 +43,19 @@ export class FeedController extends BaseHttpController implements interfaces.Con
         this.createFeedCommand = container.get<CreateFeedCommand>(CreateFeedCommand);
         this.updateFeedCommand = container.get<UpdateFeedCommand>(UpdateFeedCommand);
         this.deleteFeedCommand = container.get<DeleteFeedCommand>(DeleteFeedCommand);
+        this.getNewsByFeedIdQuery = container.get<GetNewsByFeedIdQuery>(GetNewsByFeedIdQuery);
         this.loggerService = container.get<LoggerService>(LoggerService);
     }
     @httpGet("/")
     private async list(@request() req: express.Request, @response() res: express.Response): Promise<FeedDomain[]> {
         return await this.getAllFeedsQuery.run();
+    }
+
+    @httpGet("/:id/news")
+    private async listNewsByFeedId(@requestParam("id") id: string, @response() res: express.Response):
+        Promise<Optional<NewDomain>[]>
+    {
+        return await this.getNewsByFeedIdQuery.run(id);
     }
 
     @httpGet("/:id")

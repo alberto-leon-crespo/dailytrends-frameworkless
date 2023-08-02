@@ -47,11 +47,8 @@ export class MongooseNewRepository extends BaseRepository<NewEntity, NewDomain, 
         return this.getDatailAndUpdate(newId, feed);
     }
 
-    private log(message: string) {
-        if (this.configService.getEnv('CONSOLE_ENV') === 'true') {
-            console.log(message);
-        } else {
-            this.loggerService.info(message);
-        }
+    public async getNewsByFeedId(feedId: string): Promise<Optional<NewDomain>[]> {
+        const news = await this.model.find({feed_id: feedId}).exec();
+        return news.map(newData => this.mapper.toDomain(newData.toObject()));
     }
 }

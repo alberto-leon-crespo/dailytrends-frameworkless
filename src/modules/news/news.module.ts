@@ -5,6 +5,7 @@ import { NewMapperService } from "./domain/services/new.mapper.service";
 import { ModuleInitializatorInterface } from "../commons/domain/modules/interfaces/module.initializator.interface";
 import { CreateNewCommand } from "./application/commands/create-new.command";
 import path from 'path';
+import { GetNewsByFeedIdQuery } from "./application/queries/get-news-by-feed-id.query";
 
 export class NewsModule implements ModuleInitializatorInterface {
     public async initialize(container: interfaces.Container): Promise<void> {
@@ -12,6 +13,7 @@ export class NewsModule implements ModuleInitializatorInterface {
             bind<MongooseNewRepository>(MongooseNewRepository).toSelf().inSingletonScope();
             bind<NewMapperService>(NewMapperService).toSelf().inSingletonScope();
             bind<CreateNewCommand>(CreateNewCommand).toSelf().inSingletonScope();
+            bind<GetNewsByFeedIdQuery>(GetNewsByFeedIdQuery).toSelf().inSingletonScope();
         });
         container.load(moduleContainer);
         const configService = container.get<ConfigService>(ConfigService);
