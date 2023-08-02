@@ -1,0 +1,10 @@
+app:
+  port: ${APP_PORT}
+  env: ${NODE_ENV}
+database:
+  uri: ${DATABASE_MONGO_URL}
+  user: ${DATABASE_MONGO_USER}
+  password: ${DATABASE_MONGO_PASSWORD}
+  database: ${DATABASE_MONGO_NAME}
+puppeteer:
+  headless: ${PUPPETER_HEADLESS}

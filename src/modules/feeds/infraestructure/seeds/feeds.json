@@ -1,0 +1,40 @@
+[
+  {
+    "id": "63c37f6148f1f6e938e81793",
+    "name": "El Pais",
+    "url": "https://elpais.com/",
+    "selectors": {
+      "title": {
+        "query": "section > div.b-d_a > article > header > h2 > a",
+        "attribute": "innerText"
+      },
+      "author": {
+        "query": "section > div.b-d_a > article > div.c_a > a.c_a_a",
+        "attribute": "innerText"
+      },
+      "link": {
+        "query": "section > div.b-d_a > article > header > h2 > a",
+        "attribute": "href"
+      }
+    }
+  },
+  {
+    "id": "63c37f6248f1f6e938e81795",
+    "name": "El Mundo",
+    "url": "https://www.elmundo.es/",
+    "selectors": {
+      "title": {
+        "query": "div.ue-l-cg__item .ue-c-cover-content  header.ue-c-cover-content__headline-group",
+        "attribute": "innerText"
+      },
+      "author": {
+        "query": "div.ue-l-cg__item .ue-c-cover-content  div.ue-c-cover-content__list-inline > ul span.ue-c-cover-content__byline-name",
+        "attribute": "outerText"
+      },
+      "link": {
+        "query": "div.ue-l-cg__item .ue-c-cover-content  header.ue-c-cover-content__headline-group > a.ue-c-cover-content__link",
+        "attribute": "href"
+      }
+    }
+  }
+]
