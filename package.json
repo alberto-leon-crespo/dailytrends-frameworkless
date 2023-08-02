@@ -1,6 +1,6 @@
 {
   "name": "dailytrends-frameworkless",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
     "remove:dist": "shx rm -rf ./dist",
     "copy:config": "copyfiles -u 1 src/**/*.yml dist/",
     "build": "npm run remove:dist && npm run build:app && npm run copy:config",
-    "start": "cross-env NODE_ENV=production NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config node ./dist/server.js"
+    "start": "cross-env NODE_ENV=production NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config node ./dist/server.js",
+    "release": "standard-version"
   },
   "author": "",
   "license": "ISC",
@@ -53,6 +54,7 @@
     "@types/lodash": "^4.14.196",
     "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
+    "standard-version": "^9.5.0",
     "supertest": "^6.3.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.1.6"
