@@ -2,6 +2,26 @@
 
 DailyTrends Frameworkless is a web application designed to work without the need for a specific web application framework. It provides flexibility in the development process.
 
+## Development Philosophies
+
+This project is built around a number of key architectural and design philosophies aimed at creating maintainable and scalable software. Here is a brief overview of each philosophy:
+
+### CQRS (Command Query Responsibility Segregation)
+
+CQRS is used to segregate the operations of reading and writing into different models. This facilitates their integration into event-driven architectures. Furthermore, it also enables the reuse of use cases across the application.
+
+### DDD (Domain Driven Design)
+
+The system logic is centered around business logic, following the principles of Domain Driven Design. This allows the complexity of the system to be managed effectively and enables teams to focus on the core business complexities.
+
+### Hexagonal Architecture
+
+Hexagonal architecture, also known as ports and adapters architecture, is used to drive the design of the software. This architecture encourages the separation of concerns, making the system adaptable to change, easy to maintain, and helping with the communication between different components of the system. By structuring the application around distinct ports and adapters, it enables components to remain loosely coupled and highly modular.
+
+### Onion Design
+
+The project follows Onion Design, separating the different parts of the software into application, domain, and infrastructure. Each component has been designed to be as atomic and decoupled as possible. This principle is followed to ensure that each module contains only what is necessary for its operation as much as possible, fostering a high level of maintainability and adaptability.
+
 ## Package.json - Scripts
 
 The `scripts` section of the `package.json` file defines a series of shell commands associated with this project. Here is a description of each command:
