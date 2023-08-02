@@ -30,6 +30,7 @@
     "node-config": "^0.0.2",
     "pino-http": "^8.3.3",
     "pino-pretty": "^10.2.0",
+    "puppeteer": "^20.9.0",
     "reflect-metadata": "^0.1.13",
     "remove": "^0.1.5",
     "ts-node": "^10.9.1",

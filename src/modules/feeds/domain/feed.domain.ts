@@ -1,10 +1,9 @@
 import { FeedSelectorsInterface } from "./interface/feed-selectors.interface";
+import { FeedReader } from "./reader/feed.reader";
 
-export class FeedDomain {
+export class FeedDomain extends FeedReader {
     private id: string;
     private name: string;
-    private url: string;
-    private selectors: FeedSelectorsInterface;
 
     public constructor(
         id: string,
@@ -12,10 +11,9 @@ export class FeedDomain {
         url: string,
         selectors: FeedSelectorsInterface,
     ) {
+        super(url, selectors);
         this.id = id;
         this.name = name;
-        this.url = url;
-        this.selectors = selectors;
     }
 
     public getName(): string {
