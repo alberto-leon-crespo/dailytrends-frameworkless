@@ -1,14 +1,21 @@
 import {LoggerServiceInterface} from "./interfaces/logger.service.interface";
 import pino from 'pino';
 import { injectable } from 'inversify';
+import {ConfigService} from "./config.service";
 
 @injectable()
 export class LoggerService implements LoggerServiceInterface {
     private logger: pino.Logger;
 
-    constructor() {
+    constructor(private configService: ConfigService) {
         this.logger = pino({
-            level: 'info', // configure log level as desired
+            level: this.configService.getEnv('CONSOLE_ENV') === 'true' ? 'error' : 'info', // configure log level as desired,
+            transport: {
+                target: 'pino-pretty',
+                options: {
+                    colorize: true
+                }
+            }
         });
     }
 

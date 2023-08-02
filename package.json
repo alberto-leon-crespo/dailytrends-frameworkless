@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "develop": "cross-env NODE_ENV=local NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config ts-node-dev ./src/index.ts | pino-pretty --colorize --singleLine"
+    "develop": "cross-env NODE_ENV=local NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config ts-node-dev ./src/server.ts",
+    "console:dev": "cross-env CONSOLE_ENV=true NODE_ENV=local NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config ts-node ./src/console.ts"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,7 @@
     "inversify-binding-decorators": "^4.0.0",
     "inversify-express-utils": "^6.4.3",
     "lodash": "^4.17.21",
+    "migrate-mongoose": "^4.0.0",
     "mongodb-migrations": "^0.8.5",
     "mongoose": "^7.4.1",
     "node-config": "^0.0.2",

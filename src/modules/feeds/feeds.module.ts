@@ -14,14 +14,14 @@ import {DeleteFeedCommand} from "./application/commands/delete-feed.command";
 export class FeedsModule implements ModuleInitializatorInterface {
     public async initialize(container: interfaces.Container): Promise<void> {
         const moduleContainer = new ContainerModule((bind: interfaces.Bind, unbind: interfaces.Unbind) => {
-            bind<FeedController>(FeedController).toSelf();
-            bind<MongooseFeedRepository>(MongooseFeedRepository).toSelf();
-            bind<FeedMapperService>(FeedMapperService).toSelf();
-            bind<GetAllFeedsQuery>(GetAllFeedsQuery).toSelf();
-            bind<GetFeedByIdQuery>(GetFeedByIdQuery).toSelf();
-            bind<CreateFeedCommand>(CreateFeedCommand).toSelf();
-            bind<UpdateFeedCommand>(UpdateFeedCommand).toSelf();
-            bind<DeleteFeedCommand>(DeleteFeedCommand).toSelf();
+            bind<FeedController>(FeedController).toSelf().inSingletonScope();
+            bind<MongooseFeedRepository>(MongooseFeedRepository).toSelf().inSingletonScope();
+            bind<FeedMapperService>(FeedMapperService).toSelf().inSingletonScope();
+            bind<GetAllFeedsQuery>(GetAllFeedsQuery).toSelf().inSingletonScope();
+            bind<GetFeedByIdQuery>(GetFeedByIdQuery).toSelf().inSingletonScope();
+            bind<CreateFeedCommand>(CreateFeedCommand).toSelf().inSingletonScope();
+            bind<UpdateFeedCommand>(UpdateFeedCommand).toSelf().inSingletonScope();
+            bind<DeleteFeedCommand>(DeleteFeedCommand).toSelf().inSingletonScope();
         });
         container.load(moduleContainer);
         const configService = container.get<ConfigService>(ConfigService);

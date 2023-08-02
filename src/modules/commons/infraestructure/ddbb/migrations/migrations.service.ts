@@ -1,44 +1,36 @@
-import { Config, Migrator } from 'mongodb-migrations';
-import { ConfigService } from "../../../domain/services/config.service";
 import { injectable } from "inversify";
-import { CommonsModule } from "../../../commons.module";
+import { MigrationServiceInterface } from "./interfaces/migration-service.interface";
+import * as path from "path";
+import * as child_process from "child_process";
+import * as util from "util";
+import * as fs from "fs";
+import {ConfigService} from "../../../domain/services/config.service";
+import {CommonsModule} from "../../../commons.module";
+import {LoggerService} from "../../../domain/services/logger.service";
+
+const exec = util.promisify(child_process.exec);
 
 @injectable()
-class MigrateService {
-    private migrators: typeof Migrator[];
+export class MigrationsService implements MigrationServiceInterface {
+    private migrations!: [];
 
-    constructor(private configService: ConfigService) {
-        this.migrators = [];
-        const migrations = this.configService.getModuleConfig(CommonsModule.name, 'database.migrations');
-        this.addModule(migrations);
+    public constructor(private configService: ConfigService, private loggerService: LoggerService) {
+        this.migrations = this.configService.getModuleConfig(CommonsModule.name, 'database.migrations');
     }
-
-    public addModule(path: string): void {
-        const config: typeof Config = {
-            migrationsDir: path,
-            mongodb: {
-                // Aquí va la configuración de MongoDB
-                url: this.configService.getModuleConfig(CommonsModule.name, 'database.uri'),
-                options: {
-                    useNewUrlParser: true,
-                    useUnifiedTopology: true
-                },
-                databaseName: this.configService.getModuleConfig(
-                    CommonsModule.name,
-                    'database.database'
-                ),
-                migrationsCollection: this.configService.getModuleConfig(
-                    CommonsModule.name,
-                    'database.migrations_collection_name'
-                )
+    async runMigrations(): Promise<void> {
+        for (const migrationsDir of this.migrations) {
+            const resolvedMigrationsDir = path.resolve(__dirname, migrationsDir);
+            if (fs.existsSync(resolvedMigrationsDir)) {
+                this.loggerService.info(`Running migrations from ${resolvedMigrationsDir}`);
+                try {
+                    await exec(`migrate up -m ${resolvedMigrationsDir}`);
+                    this.loggerService.info(`Migrations from ${resolvedMigrationsDir} completed.`);
+                } catch (error) {
+                    this.loggerService.error(`Error running migrations from ${resolvedMigrationsDir}: ${error}`);
+                }
+            } else {
+                this.loggerService.info(`Directory ${resolvedMigrationsDir} does not exist. Skipping.`);
             }
-        };
-        this.migrators.push(new Migrator(config));
-    }
-
-    public async runMigrations(): Promise<void> {
-        for (const migrator of this.migrators) {
-            await migrator.run();
         }
     }
 }
