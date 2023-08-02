@@ -2,6 +2,21 @@
 
 DailyTrends Frameworkless is a web application designed to work without the need for a specific web application framework. It provides flexibility in the development process.
 
+## Package.json - Scripts
+
+The `scripts` section of the `package.json` file defines a series of shell commands associated with this project. Here is a description of each command:
+
+- `test`: Executes the project's unit tests. In this case, no tests are defined, so it returns an error.
+- `develop`: Runs the project in the development environment.
+- `console:dev` and `console:prod`: These allow you to run console commands in the development and production environment, respectively.
+- `build:app`: Compiles the project for the production environment.
+- `remove:dist`: Deletes the `dist` folder.
+- `copy:config`: Copies the configuration files into the `dist` folder.
+- `build`: Deletes the `dist` folder, compiles the project and copies the configuration files.
+- `start`: Runs the project in the production environment.
+
+Author of the project: **Alberto León Crespo**
+
 ## Getting Started
 
 To start with the project, clone the repository:
