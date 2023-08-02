@@ -32,7 +32,7 @@ export class DailytrendsDatasourceService {
             this.connection.set('bufferCommands', false);
             this.loggerService.info('Connected successfully to MongoDB!');
         } catch (error: any) {
-            this.loggerService.error('Error while connecting to MongoDB:', error);
+            this.loggerService.error('Error while connecting to MongoDB:', error.message);
         }
     }
 }

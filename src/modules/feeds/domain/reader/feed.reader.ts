@@ -2,13 +2,17 @@ import puppeteer, { Browser, Page } from 'puppeteer';
 import { FeedSelectorsInterface } from '../interface/feed-selectors.interface';
 import * as process from 'process';
 import { CssSelector } from "./selectors/css-selector";
+import {ConfigService} from "../../../commons/domain/services/config.service";
+import {container} from "../../../../bootstrap";
 
 export abstract class FeedReader {
     private browser!: Browser;
     private page!: Page;
     protected selectors!: FeedSelectorsInterface;
     protected cssSelectors: CssSelector[] = [];
+    protected configService!: ConfigService;
     protected constructor(protected url: string, selectors: FeedSelectorsInterface) {
+        this.configService = container.get<ConfigService>(ConfigService);
         for (const selectorName in selectors) {
             this.cssSelectors.push(
                 new CssSelector(
