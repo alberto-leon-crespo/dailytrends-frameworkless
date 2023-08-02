@@ -2,10 +2,14 @@ import { UsecaseInterface } from "../../../commons/domain/usecases/UsecaseInterf
 import { injectable } from "inversify";
 import { MongooseFeedRepository } from "../../infraestructure/adapters/repository/mongoose.feed.repository";
 import { FeedDomain } from "../../domain/feed.domain";
+import {container} from "../../../../bootstrap";
 
 @injectable()
 export class GetAllFeedsQuery implements UsecaseInterface {
-    public constructor(private mongooseFeedRepository: MongooseFeedRepository) {}
+    private mongooseFeedRepository: MongooseFeedRepository;
+    public constructor() {
+        this.mongooseFeedRepository = container.get<MongooseFeedRepository>(MongooseFeedRepository)
+    }
 
     public run(): Promise<FeedDomain[]> {
         return this.mongooseFeedRepository.getAllFeeds();

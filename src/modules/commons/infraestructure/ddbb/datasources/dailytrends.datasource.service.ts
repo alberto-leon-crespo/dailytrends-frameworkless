@@ -1,15 +1,21 @@
-import { injectable } from 'inversify';
+import {inject, injectable} from 'inversify';
 import mongoose from 'mongoose';
 import {ConfigService} from "../../../domain/services/config.service";
 import {CommonsModule} from "../../../commons.module";
 import {LoggerService} from "../../../domain/services/logger.service";
+import {container} from "../../../../../bootstrap";
 
 @injectable()
 export class DailytrendsDatasourceService {
 
     public connection!: typeof mongoose;
+    private configService: ConfigService;
+    private loggerService: LoggerService;
 
-    constructor(private configService: ConfigService, private loggerService: LoggerService) {}
+    constructor() {
+        this.configService = container.get<ConfigService>(ConfigService);
+        this.loggerService = container.get<LoggerService>(LoggerService);
+    }
 
     public async initializeConnection(): Promise<void> {
         const mongoUri = this.configService.getModuleConfig(CommonsModule.name, 'database.uri');

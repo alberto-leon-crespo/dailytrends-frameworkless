@@ -1,6 +1,5 @@
 import { Command } from 'commander';
 import { Container } from 'inversify';
-import { bootstrap } from '../../../../bootstrap';
 
 interface CommandOption {
     flags: string;
@@ -24,10 +23,6 @@ export abstract class BaseCommand {
     ) {
         this._command = new Command();
         this._command.name(this._name).description(this._description).version(this._version);
-    }
-
-    public setContainer(container: Container) {
-        this._container = container;
     }
 
     // Método para agregar opciones al comando.

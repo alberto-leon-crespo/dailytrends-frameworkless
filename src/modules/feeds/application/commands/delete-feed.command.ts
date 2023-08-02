@@ -4,12 +4,14 @@ import { MongooseFeedRepository } from "../../infraestructure/adapters/repositor
 import { FeedDomain } from "../../domain/feed.domain";
 import { Optional } from "typescript-optional";
 import { CreateFeedDto } from "../../infraestructure/dtos/create-feed.dto";
+import {container} from "../../../../bootstrap";
 
 @injectable()
 export class DeleteFeedCommand implements UsecaseInterface {
-    public constructor(
-        private mongooseFeedRepository: MongooseFeedRepository
-    ) {}
+    private mongooseFeedRepository: MongooseFeedRepository;
+    public constructor() {
+        this.mongooseFeedRepository = container.get<MongooseFeedRepository>(MongooseFeedRepository)
+    }
 
     public async run(id: string): Promise<Optional<FeedDomain>> {
         return this.mongooseFeedRepository.deleteFeed(id);

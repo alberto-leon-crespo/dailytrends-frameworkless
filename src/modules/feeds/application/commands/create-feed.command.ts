@@ -4,10 +4,14 @@ import { MongooseFeedRepository } from "../../infraestructure/adapters/repositor
 import { FeedDomain } from "../../domain/feed.domain";
 import { Optional } from "typescript-optional";
 import { CreateFeedDto } from "../../infraestructure/dtos/create-feed.dto";
+import {container} from "../../../../bootstrap";
 
 @injectable()
 export class CreateFeedCommand implements UsecaseInterface {
-    public constructor(private mongooseFeedRepository: MongooseFeedRepository) {}
+    private mongooseFeedRepository: MongooseFeedRepository;
+    public constructor() {
+        this.mongooseFeedRepository = container.get<MongooseFeedRepository>(MongooseFeedRepository);
+    }
 
     public run(feed: CreateFeedDto): Promise<Optional<FeedDomain>> {
         const feedDomain = new FeedDomain(feed._id, feed.name, feed.url, feed.selectors);

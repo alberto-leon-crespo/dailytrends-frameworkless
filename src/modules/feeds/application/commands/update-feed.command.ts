@@ -5,13 +5,17 @@ import { FeedDomain } from "../../domain/feed.domain";
 import { Optional } from "typescript-optional";
 import { CreateFeedDto } from "../../infraestructure/dtos/create-feed.dto";
 import {GetFeedByIdQuery} from "../queries/get-feed-by-id.query";
+import {container} from "../../../../bootstrap";
 
 @injectable()
 export class UpdateFeedCommand implements UsecaseInterface {
-    public constructor(
-        private mongooseFeedRepository: MongooseFeedRepository,
-        private getFeedByIdQuery: GetFeedByIdQuery
-    ) {}
+
+    private mongooseFeedRepository: MongooseFeedRepository;
+    private getFeedByIdQuery: GetFeedByIdQuery;
+    public constructor() {
+        this.mongooseFeedRepository = container.get<MongooseFeedRepository>(MongooseFeedRepository);
+        this.getFeedByIdQuery = container.get<GetFeedByIdQuery>(GetFeedByIdQuery);
+    }
 
     public async run(id: string, feed: CreateFeedDto): Promise<Optional<FeedDomain>> {
         const feedData: FeedDomain = await this.getFeedByIdQuery.run(id) as unknown as FeedDomain;

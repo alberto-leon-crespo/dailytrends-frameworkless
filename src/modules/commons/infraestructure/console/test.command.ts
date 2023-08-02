@@ -1,7 +1,7 @@
 import { BaseCommand } from "./base.command";
-import { LoggerService } from "../../domain/services/logger.service";
-import { Command } from 'commander';
+import {injectable} from "inversify";
 
+@injectable()
 export class TestCommand extends BaseCommand {
 
     constructor() {

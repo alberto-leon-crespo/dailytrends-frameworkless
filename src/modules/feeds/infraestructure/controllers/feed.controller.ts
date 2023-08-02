@@ -21,19 +21,26 @@ import { LoggerService } from "../../../commons/domain/services/logger.service";
 import { Optional } from "typescript-optional";
 import { UpdateFeedCommand } from "../../application/commands/update-feed.command";
 import { DeleteFeedCommand } from "../../application/commands/delete-feed.command";
+import {container} from "../../../../bootstrap";
 
 @controller("/feeds")
 export class FeedController extends BaseHttpController implements interfaces.Controller {
 
-    constructor(
-        @inject(GetAllFeedsQuery) private readonly getAllFeedsQuery: GetAllFeedsQuery,
-        @inject(GetFeedByIdQuery) private readonly getFeedByIdQuery: GetFeedByIdQuery,
-        @inject(CreateFeedCommand) private readonly createFeedCommand: CreateFeedCommand,
-        @inject(UpdateFeedCommand) private readonly updateFeedCommand: UpdateFeedCommand,
-        @inject(DeleteFeedCommand) private readonly deleteFeedCommand: DeleteFeedCommand,
-        @inject(LoggerService) private readonly loggerService: LoggerService,
-    ) {
+    private readonly getAllFeedsQuery: GetAllFeedsQuery;
+    private readonly getFeedByIdQuery: GetFeedByIdQuery;
+    private readonly createFeedCommand: CreateFeedCommand;
+    private readonly updateFeedCommand: UpdateFeedCommand;
+    private readonly deleteFeedCommand: DeleteFeedCommand;
+    private readonly loggerService: LoggerService;
+
+    constructor() {
         super();
+        this.getAllFeedsQuery = container.get<GetAllFeedsQuery>(GetAllFeedsQuery);
+        this.getFeedByIdQuery = container.get<GetFeedByIdQuery>(GetFeedByIdQuery);
+        this.createFeedCommand = container.get<CreateFeedCommand>(CreateFeedCommand);
+        this.updateFeedCommand = container.get<UpdateFeedCommand>(UpdateFeedCommand);
+        this.deleteFeedCommand = container.get<DeleteFeedCommand>(DeleteFeedCommand);
+        this.loggerService = container.get<LoggerService>(LoggerService);
     }
     @httpGet("/")
     private async list(@request() req: express.Request, @response() res: express.Response): Promise<FeedDomain[]> {
