@@ -1,52 +1,66 @@
-import { NewSelectorsInterface } from "./interface/new-selectors.interface";
+import {id} from "inversify";
 
 export class NewDomain {
     private id: string;
-    private name: string;
-    private url: string;
-    private selectors: NewSelectorsInterface;
+    private author: string;
+    private title: string;
+    private link: string;
+    private feed_id: string;
 
     public constructor(
-        id: string,
-        name: string,
-        url: string,
-        selectors: NewSelectorsInterface,
+        newId: string,
+        author: string,
+        title: string,
+        link: string,
+        // tslint:disable-next-line:variable-name
+        feed_id: string,
     ) {
-        this.id = id;
-        this.name = name;
-        this.url = url;
-        this.selectors = selectors;
+        this.id = newId;
+        this.author = author;
+        this.title = title;
+        this.link = link;
+        this.feed_id = feed_id;
     }
 
-    public getName(): string {
-        return this.name;
-    }
 
-    public getId(): string {
+    getId(): string {
         return this.id;
     }
 
-    public getUrl(): string {
-        return this.url;
-    }
-
-    public getSelectors(): NewSelectorsInterface {
-        return this.selectors;
-    }
-
-    public setId(value: string) {
+    setId(value: string) {
         this.id = value;
     }
 
-    public setName(value: string) {
-        this.name = value;
+    getAuthor(): string {
+        return this.author;
     }
 
-    public setUrl(value: string) {
-        this.url = value;
+    setAuthor(value: string) {
+        this.author = value;
     }
 
-    public setSelectors(value: NewSelectorsInterface) {
-        this.selectors = value;
+    getTitle(): string {
+        return this.title;
+    }
+
+    setTitle(value: string) {
+        this.title = value;
+    }
+
+    getLink(): string {
+        return this.link;
+    }
+
+    setLink(value: string) {
+        this.link = value;
+    }
+
+
+    getFeedId(): string {
+        return this.feed_id;
+    }
+
+    setFeedId(value: string) {
+        this.feed_id = value;
     }
 }

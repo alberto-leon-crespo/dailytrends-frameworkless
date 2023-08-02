@@ -35,10 +35,6 @@ export class MongooseNewRepository extends BaseRepository<NewEntity, NewDomain, 
         return this.delete(newId);
     }
 
-    public getNewsByFeedId(feedId: string) {
-
-    }
-
     public getAllNews(): Promise<NewDomain[]> {
         return this.getAll();
     }

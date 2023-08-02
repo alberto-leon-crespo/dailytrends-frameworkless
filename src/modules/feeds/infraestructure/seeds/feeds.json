@@ -5,15 +5,15 @@
     "url": "https://elpais.com/",
     "selectors": {
       "title": {
-        "query": "ection[data-dtm-region=portada_apertura'] h2 a",
+        "query": "section > div.b-d_a > article > header > h2 > a",
         "attribute": "innerText"
       },
       "author": {
-        "query": "section[data-dtm-region='portada_apertura'] div.c_a",
+        "query": "section > div.b-d_a > article > div.c_a > a.c_a_a",
         "attribute": "innerText"
       },
       "link": {
-        "query": "section[data-dtm-region='portada_apertura'] h2 a",
+        "query": "section > div.b-d_a > article > header > h2 > a",
         "attribute": "href"
       }
     }
@@ -24,15 +24,15 @@
     "url": "https://www.elmundo.es/",
     "selectors": {
       "title": {
-        "query": "article[ue-article-id] .ue-c-cover-content__headline",
+        "query": "div.ue-l-cg__item .ue-c-cover-content  header.ue-c-cover-content__headline-group",
         "attribute": "innerText"
       },
       "author": {
-        "query": "article[ue-article-id] .ue-c-cover-content__byline-name",
-        "attribute": "innerText"
+        "query": "div.ue-l-cg__item .ue-c-cover-content  div.ue-c-cover-content__list-inline > ul span.ue-c-cover-content__byline-name",
+        "attribute": "outerText"
       },
       "link": {
-        "query": "article[ue-article-id] .ue-c-cover-content__link",
+        "query": "div.ue-l-cg__item .ue-c-cover-content  header.ue-c-cover-content__headline-group > a.ue-c-cover-content__link",
         "attribute": "href"
       }
     }

@@ -21,9 +21,7 @@ export abstract class FeedReader {
     }
 
     public async initializeReader() {
-        this.browser = await puppeteer.launch({
-            headless: process.env.PUPPETER_HEADLESS === 'true',
-        });
+        this.browser = await puppeteer.launch({headless: false});
         this.page = await this.browser.newPage();
         await this.page.goto(this.url);
     }

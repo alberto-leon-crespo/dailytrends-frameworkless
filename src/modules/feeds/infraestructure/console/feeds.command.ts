@@ -1,20 +1,31 @@
 import { BaseCommand } from "../../../commons/infraestructure/console/base.command";
-import { container } from "../../../../bootstrap";
-import { GetAllFeedsQuery } from "../../application/queries/get-all-feeds.query";
-import { CreateNewCommand } from "../../../news/application/commands/create-new.command";
+import {injectable} from "inversify";
+import {MongooseFeedRepository} from "../adapters/repository/mongoose.feed.repository";
+import {container} from "../../../../bootstrap";
+import {GetAllFeedsQuery} from "../../application/queries/get-all-feeds.query";
+import {CreateNewCommand} from "../../../news/application/commands/create-new.command";
+import {NewDomain} from "../../../news/domain/new.domain";
 
-export class FeedsSeederCommand extends BaseCommand {
+export class FeedsCommand extends BaseCommand {
 
+    private mongooseFeedRepository: MongooseFeedRepository;
     private getAllFeedsQuery: GetAllFeedsQuery;
     private createNewCommand: CreateNewCommand;
     constructor() {
-        super("feeds", "Seed feeds collection with initial data", "1");
+        super("feeds", "Feeds command to manage feeds", "1");
+        this.mongooseFeedRepository = container.get<MongooseFeedRepository>(MongooseFeedRepository);
         this.getAllFeedsQuery = container.get<GetAllFeedsQuery>(GetAllFeedsQuery);
         this.createNewCommand = container.get<CreateNewCommand>(CreateNewCommand);
         this.setup();
     }
 
     setup(): void {
+        this
+            .getCommand()
+            .command('seed')
+            .action(async () => {
+                await this.mongooseFeedRepository.seedFeeds();
+            })
         this
             .getCommand()
             .command('read')
@@ -37,7 +48,9 @@ export class FeedsSeederCommand extends BaseCommand {
                     }
                 }
                 for (const newData of finalNews) {
-                    await this.createNewCommand.run(newData);
+                    if (newData.author && newData.title && newData.link && newData.feed_id) {
+                        await this.createNewCommand.run(newData);
+                    }
                 }
                 process.exit();
             })

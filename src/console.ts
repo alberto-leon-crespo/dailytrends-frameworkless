@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Command } from 'commander';
 import { TestCommand } from './modules/commons/infraestructure/console/test.command';
-import { FeedsSeederCommand } from "./modules/feeds/infraestructure/console/feeds.seeder.command";
+import { FeedsCommand } from "./modules/feeds/infraestructure/console/feeds.command";
 import { bootstrap } from "./bootstrap";
 
 const program = new Command();
@@ -15,7 +15,7 @@ bootstrap().then( async containerInstance => {
 
     const commands = [
         new TestCommand(),
-        new FeedsSeederCommand(),
+        new FeedsCommand(),
     ];
 
     commands.forEach(commandInstance => {

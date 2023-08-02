@@ -14,7 +14,13 @@ export class CreateNewCommand implements UsecaseInterface {
     }
 
     public run(newObject: CreateNewDto): Promise<Optional<NewDomain>> {
-        const newDomain = new NewDomain(newObject._id, newObject.name, newObject.url, newObject.selectors);
+        const newDomain = new NewDomain(
+            newObject._id,
+            newObject.author,
+            newObject.title,
+            newObject.link,
+            newObject.feed_id
+        );
         return this.mongooseFeedRepository.createNew(newDomain);
     }
 }

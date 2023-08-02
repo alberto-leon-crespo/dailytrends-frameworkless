@@ -1,7 +1,6 @@
 import { prop, getModelForClass, modelOptions, Severity } from '@typegoose/typegoose';
 import { Types, Document } from 'mongoose';
-import { NewSelectorsInterface } from "../../../domain/interface/new-selectors.interface";
-@modelOptions({ schemaOptions: { collection: 'feeds'}, options: { allowMixed: Severity.ALLOW} })
+@modelOptions({ schemaOptions: { collection: 'news'}, options: { allowMixed: Severity.ALLOW} })
 export class NewDocument extends Document {
     @prop()
     _id!: Types.ObjectId;
@@ -10,13 +9,17 @@ export class NewDocument extends Document {
     id!: string;
 
     @prop({ required: true })
-    name!: string;
+    author!: string;
 
     @prop({ required: true })
-    url!: string;
+    title!: string;
 
     @prop({ required: true })
-    selectors!: NewSelectorsInterface
+    link!: string;
+
+    @prop({ required: true })
+    // tslint:disable-next-line:variable-name
+    feed_id!: Types.ObjectId;
 }
 
 export const NewModel = getModelForClass(NewDocument);

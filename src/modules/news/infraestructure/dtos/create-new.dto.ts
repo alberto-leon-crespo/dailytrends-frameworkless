@@ -1,16 +1,19 @@
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import { NewSelectorsInterface } from "../../domain/interface/new-selectors.interface";
 
 export class CreateNewDto {
     @IsOptional()
     _id!: string;
 
     @IsNotEmpty()
-    name!: string;
+    author!: string;
 
     @IsNotEmpty()
-    url!: string;
+    title!: string;
 
     @IsNotEmpty()
-    selectors!: NewSelectorsInterface;
+    link!: string;
+
+    @IsNotEmpty()
+    // tslint:disable-next-line:variable-name
+    feed_id!: string;
 }
