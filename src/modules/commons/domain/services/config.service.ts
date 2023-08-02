@@ -52,8 +52,8 @@ export class ConfigService {
     }
 
     private replaceEnvVars(data: any): any {
-        let copy = { ...data };  // Create a shallow copy of the object
-        for (let key in copy) {
+        const copy = { ...data };  // Create a shallow copy of the object
+        for (const key in copy) {
             if (typeof copy[key] === 'string') {
                 copy[key] = copy[key].replace(/\$\{(.*)\}/, (match: any, envVar: any) => process.env[envVar] || '');
             } else if (typeof copy[key] === 'object') {

@@ -5,3 +5,6 @@ database:
   user: ${DATABASE_MONGO_USER}
   password: ${DATABASE_MONGO_PASSWORD}
   database: ${DATABASE_MONGO_NAME}
+  migrations_collection_name: ${DATABASE_MONGO_MIGRATION_COLLECTION}
+  migrations:
+    - ./src/modules/feeds/infraestructure/migrations
