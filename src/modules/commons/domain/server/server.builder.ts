@@ -5,7 +5,8 @@ import { Container } from "inversify";
 import {LoggerService} from "../services/logger.service";
 import {ConfigService} from "../services/config.service";
 import {CommonsModule} from "../../commons.module";
-import * as express from 'express';
+import swaggerDocument from '../../../../../docs/swagger/swagger.json';
+import swaggerUi from 'swagger-ui-express';
 import http from "http";
 
 export class ServerBuilder {
@@ -22,6 +23,7 @@ export class ServerBuilder {
                 }));
                 expressApp.use(bodyParser.json());
                 expressApp.use(expressPino());
+                expressApp.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
             });
 
             const logger = container.get<LoggerService>(LoggerService);

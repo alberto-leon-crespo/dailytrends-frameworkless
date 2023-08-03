@@ -1,0 +1,278 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"JsonResult": {
+				"properties": {
+					"json": {},
+					"statusCode": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"json",
+					"statusCode"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FeedSelectorInterface": {
+				"properties": {
+					"query": {
+						"type": "string"
+					},
+					"attribute": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"query",
+					"attribute"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"FeedSelectorsInterface": {
+				"properties": {},
+				"type": "object",
+				"additionalProperties": {
+					"$ref": "#/components/schemas/FeedSelectorInterface"
+				}
+			},
+			"CreateFeedDto": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"url": {
+						"type": "string"
+					},
+					"selectors": {
+						"$ref": "#/components/schemas/FeedSelectorsInterface"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"url",
+					"selectors"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Optional_FeedDomain_": {}
+		},
+		"securitySchemes": {}
+	},
+	"info": {
+		"title": "dailytrends-frameworkless",
+		"version": "1.3.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/users": {
+			"get": {
+				"operationId": "List",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JsonResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/users/{id}/news": {
+			"get": {
+				"operationId": "ListNewsByFeedId",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JsonResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"post": {
+				"operationId": "Create",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JsonResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateFeedDto"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"operationId": "Detail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JsonResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			},
+			"put": {
+				"operationId": "Update",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"anyOf": [
+										{
+											"$ref": "#/components/schemas/Optional_FeedDomain_"
+										},
+										{}
+									]
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateFeedDto"
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"operationId": "Delete",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/JsonResult"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"feeds"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
