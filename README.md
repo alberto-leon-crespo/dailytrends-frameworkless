@@ -32,17 +32,22 @@ It's interactive!
 
 The `scripts` section of the `package.json` file defines a series of shell commands associated with this project. Here is a description of each command:
 
-test: This script runs the project's unit tests in the test environment. It utilizes the Jest module to run the tests and the --detectOpenHandles and --forceExit flags to control Jest's behavior regarding asynchronous operations and test run termination.
+## Available Scripts
 
-- `test:interactive`: This script runs the project's tests in an interactive mode. Jest will stay open after running tests and will watch for changes in test files, re-running relevant tests when changes are detected. This is ideal for use during development.
-- `test`: Executes the project's unit tests. In this case, no tests are defined, so it returns an error.
-- `develop`: Runs the project in the development environment.
-- `console:dev` and `console:prod`: These allow you to run console commands in the development and production environment, respectively.
-- `build:app`: Compiles the project for the production environment.
-- `remove:dist`: Deletes the `dist` folder.
-- `copy:config`: Copies the configuration files into the `dist` folder.
-- `build`: Deletes the `dist` folder, compiles the project, run test and copies the configuration files.
-- `start`: Runs the project in the production environment.
+This project includes several scripts for different purposes:
+
+- `"test"`: This script sets the environment to `test` and runs all tests in the project using Jest. The `--detectOpenHandles` and `--forceExit` options help ensure all tests are correctly finalized, and there are no pending asynchronous operations when the tests finish.
+- `"test:interactive"`: This script runs Jest in watch mode, which allows for interactive testing. Tests related to changed files will automatically run, providing instant feedback during development.
+- `"develop"`: This script starts the server in development mode using `ts-node-dev`, which restarts the server on file changes.
+- `"console:dev"` and `"console:prod"`: These scripts run the console in development and production environments, respectively. `CONSOLE_ENV=true` signifies that the console is active.
+- `"build:app"`: This script transpiles the TypeScript code to JavaScript using the TypeScript Compiler (`tsc`).
+- `"remove:dist"`: This script removes the `./dist` directory, which contains the compiled JavaScript files from a previous build.
+- `"copy:config"`: This script copies all `.yml` configuration files from the `src` directory to the `dist/src` directory after the TypeScript code has been transpiled to JavaScript.
+- `"build"`: This script removes the previous build in the `./dist` directory, runs all tests, builds the application, copies the configuration files to the `dist/src` directory, and then builds the Docker image.
+- `"start"`: This script starts the server in the production environment.
+- `"release"`: This script automates version management and package release using the `standard-version` package.
+- `"docker:build"`: This script builds the Docker image for the project with the tag `dailynews`.
+- `"generate:swagger"`: This script generates the Swagger (OpenAPI) specification document using `tsoa`.
 
 Author of the project: **Alberto León Crespo**
 
