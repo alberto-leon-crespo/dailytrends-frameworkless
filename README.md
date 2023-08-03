@@ -64,7 +64,9 @@ git checkout master
 
 To install all the dependencies of the project, run:
 
+```bash
 npm ci
+```
 
 ## Docker Configuration
 
@@ -116,12 +118,33 @@ Mongo Express provides a web interface for viewing and editing data in MongoDB.
 
 To build the application, run:
 
-```npm run build```
+```bash
+npm run build
+```
 
 This command will clean the dist folder, build the application, and copy the configuration files to the dist folder.
 
 To run the built version of the application, run:
 
+```bash
+npm run start
+```
+
+## Running the Docker Container
+
+The Docker image for this project is automatically built when the `npm run build` command is run.
+
+To run the Docker container, you need to have a `.env` file that contains your environment variable settings. In particular, the Docker container needs to be able to connect to a MongoDB instance that matches the information in your `.env` file.
+
+You can run the Docker container using the following command:
+
+```bash
+docker run -p 3000:3000 --env-file .env dailynews
+```
+
+> **Note**: Please ensure that your .env file contains valid settings for your MongoDB instance (for example, MONGODB_URI and MONGODB_DATABASE), as well as any other environment variables your application requires.
+
+
 ## License
 
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the ISC License - see the [LICENSE](LICENSE.md) file for details.
