@@ -26,13 +26,16 @@ The project follows Onion Design, separating the different parts of the software
 
 The `scripts` section of the `package.json` file defines a series of shell commands associated with this project. Here is a description of each command:
 
+test: This script runs the project's unit tests in the test environment. It utilizes the Jest module to run the tests and the --detectOpenHandles and --forceExit flags to control Jest's behavior regarding asynchronous operations and test run termination.
+
+- `test:interactive`: This script runs the project's tests in an interactive mode. Jest will stay open after running tests and will watch for changes in test files, re-running relevant tests when changes are detected. This is ideal for use during development.
 - `test`: Executes the project's unit tests. In this case, no tests are defined, so it returns an error.
 - `develop`: Runs the project in the development environment.
 - `console:dev` and `console:prod`: These allow you to run console commands in the development and production environment, respectively.
 - `build:app`: Compiles the project for the production environment.
 - `remove:dist`: Deletes the `dist` folder.
 - `copy:config`: Copies the configuration files into the `dist` folder.
-- `build`: Deletes the `dist` folder, compiles the project and copies the configuration files.
+- `build`: Deletes the `dist` folder, compiles the project, run test and copies the configuration files.
 - `start`: Runs the project in the production environment.
 
 Author of the project: **Alberto León Crespo**
