@@ -1,6 +1,5 @@
 import * as express from "express";
 import {
-    interfaces,
     controller,
     httpGet,
     httpPost,
@@ -8,7 +7,8 @@ import {
     request,
     response,
     requestParam,
-    BaseHttpController, requestBody, httpPut
+    requestBody,
+    httpPut
 } from "inversify-express-utils";
 import { FeedDomain } from "../../domain/feed.domain";
 import { GetAllFeedsQuery } from "../../application/queries/get-all-feeds.query";
@@ -24,9 +24,10 @@ import { container } from "../../../../bootstrap";
 import { GetNewsByFeedIdQuery } from "../../../news/application/queries/get-news-by-feed-id.query";
 import { NewDomain } from "../../../news/domain/new.domain";
 import { HttpStatus } from "../../../commons/domain/server/http-statuses.enum";
+import {BaseController} from "../../../commons/infraestructure/controllers/base.controller";
 
 @controller("/feeds")
-export class FeedController extends BaseHttpController implements interfaces.Controller {
+export class FeedController extends BaseController {
 
     private readonly getAllFeedsQuery: GetAllFeedsQuery;
     private readonly getFeedByIdQuery: GetFeedByIdQuery;
@@ -72,11 +73,9 @@ export class FeedController extends BaseHttpController implements interfaces.Con
         try {
             await transformAndValidate(CreateFeedDto, feed);
             const createdFeed = await this.createFeedCommand.run(feed);
-            res.status(HttpStatus.CREATED).send(createdFeed);
-            return
+            return this.json(createdFeed, HttpStatus.CREATED);
         } catch (errors) {
-            res.status(HttpStatus.BAD_REQUEST).send(errors);
-            return;
+            return this.json(errors, HttpStatus.BAD_REQUEST);
         }
     }
 
