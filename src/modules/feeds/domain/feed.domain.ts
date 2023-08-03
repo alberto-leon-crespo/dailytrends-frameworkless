@@ -47,4 +47,13 @@ export class FeedDomain extends FeedReader {
     public setSelectors(value: FeedSelectorsInterface) {
         this.selectors = value;
     }
+
+    public toJSON() {
+        return {
+            id: this.id,
+            name: this.name,
+            url: this.url,
+            selectors: this.selectors,
+        }
+    }
 }

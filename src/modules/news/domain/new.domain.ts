@@ -63,4 +63,14 @@ export class NewDomain {
     setFeedId(value: string) {
         this.feed_id = value;
     }
+
+    public toJSON() {
+        return {
+            id: this.id,
+            feed_id: this.feed_id,
+            author: this.author,
+            title: this.title,
+            link: this.link,
+        }
+    }
 }

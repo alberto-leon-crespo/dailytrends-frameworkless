@@ -13,6 +13,7 @@ export abstract class FeedReader {
     protected configService!: ConfigService;
     protected constructor(protected url: string, selectors: FeedSelectorsInterface) {
         this.configService = container.get<ConfigService>(ConfigService);
+        this.selectors = selectors;
         for (const selectorName in selectors) {
             this.cssSelectors.push(
                 new CssSelector(
