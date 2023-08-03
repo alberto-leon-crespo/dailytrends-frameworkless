@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config jest --detectOpenHandles",
-    "test:interactive": "cross-env NODE_ENV=test NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config jest",
+    "test": "cross-env NODE_ENV=test NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config jest --detectOpenHandles --forceExit",
+    "test:interactive": "cross-env NODE_ENV=test NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config jest --watch",
     "develop": "cross-env NODE_ENV=develop NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config ts-node-dev ./src/server.ts",
     "console:dev": "cross-env CONSOLE_ENV=true NODE_ENV=develop NODE_CONFIG_DIR=./src/modules/commons/infraestructure/config ts-node ./src/console.ts",
     "console:prod": "cross-env CONSOLE_ENV=true NODE_ENV=production NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config node ./dist/console.js",
     "build:app": "cross-env CONSOLE_ENV=true NODE_ENV=production NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config ./node_modules/.bin/tsc -p ./tsconfig.json",
     "remove:dist": "shx rm -rf ./dist",
     "copy:config": "copyfiles -u 1 src/**/*.yml dist/",
-    "build": "npm run remove:dist && npm run build:app && npm run copy:config",
+    "build": "npm run remove:dist && npm run test && npm run build:app && npm run copy:config",
     "start": "cross-env NODE_ENV=production NODE_CONFIG_DIR=./dist/modules/commons/infraestructure/config node ./dist/server.js",
     "release": "standard-version"
   },
