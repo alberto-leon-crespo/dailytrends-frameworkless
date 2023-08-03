@@ -10,6 +10,7 @@ import { container } from "../../../../../bootstrap";
 import { LoggerService } from "../../../../commons/domain/services/logger.service";
 import FeedsSeeds from "../../seeds/feeds.json";
 import {ConfigService} from "../../../../commons/domain/services/config.service";
+import {CreateNewCommand} from "../../../../news/application/commands/create-new.command";
 
 @injectable()
 export class MongooseFeedRepository extends BaseRepository<FeedEntity, FeedDomain, FeedDocument> implements FeedDomainRepository {
@@ -17,7 +18,6 @@ export class MongooseFeedRepository extends BaseRepository<FeedEntity, FeedDomai
     private feedMapperService: FeedMapperService;
     private loggerService: LoggerService;
     private configService: ConfigService;
-
     constructor() {
         // This workaround solves problems with entended services in inversify
         super();
@@ -56,6 +56,27 @@ export class MongooseFeedRepository extends BaseRepository<FeedEntity, FeedDomai
             await FeedModel.insertMany(FeedsSeeds);
             this.log('Feeds collection seeding success.');
         }
+    }
+
+    public async readFeeds(): Promise<any> {
+        const feeds = await this.getAllFeeds();
+        const feedsNews: { [key: string]: any } = {};
+        const finalNews = [];
+        for (const index in feeds) {
+            const feed = feeds[index];
+            await feed.initializeReader();
+            feedsNews[feed.getId()] = await feed.read();
+        }
+        for (const feedId in feedsNews) {
+            const news = feedsNews[feedId];
+            for (const newData of news) {
+                finalNews.push({
+                    ...newData,
+                    feed_id: feedId,
+                });
+            }
+        }
+        return finalNews;
     }
 
     private log(message: string) {
