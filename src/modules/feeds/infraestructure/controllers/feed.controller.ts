@@ -10,7 +10,6 @@ import {
     requestParam,
     BaseHttpController, requestBody, httpPut
 } from "inversify-express-utils";
-import { inject } from "inversify";
 import { FeedDomain } from "../../domain/feed.domain";
 import { GetAllFeedsQuery } from "../../application/queries/get-all-feeds.query";
 import { GetFeedByIdQuery } from "../../application/queries/get-feed-by-id.query";
@@ -21,9 +20,10 @@ import { LoggerService } from "../../../commons/domain/services/logger.service";
 import { Optional } from "typescript-optional";
 import { UpdateFeedCommand } from "../../application/commands/update-feed.command";
 import { DeleteFeedCommand } from "../../application/commands/delete-feed.command";
-import {container} from "../../../../bootstrap";
-import {GetNewsByFeedIdQuery} from "../../../news/application/queries/get-news-by-feed-id.query";
-import {NewDomain} from "../../../news/domain/new.domain";
+import { container } from "../../../../bootstrap";
+import { GetNewsByFeedIdQuery } from "../../../news/application/queries/get-news-by-feed-id.query";
+import { NewDomain } from "../../../news/domain/new.domain";
+import { HttpStatus } from "../../../commons/domain/server/http-statuses.enum";
 
 @controller("/feeds")
 export class FeedController extends BaseHttpController implements interfaces.Controller {
@@ -72,10 +72,10 @@ export class FeedController extends BaseHttpController implements interfaces.Con
         try {
             await transformAndValidate(CreateFeedDto, feed);
             const createdFeed = await this.createFeedCommand.run(feed);
-            res.status(200).send(createdFeed);
+            res.status(HttpStatus.CREATED).send(createdFeed);
             return
         } catch (errors) {
-            res.status(400).send(errors);
+            res.status(HttpStatus.BAD_REQUEST).send(errors);
             return;
         }
     }
@@ -91,10 +91,10 @@ export class FeedController extends BaseHttpController implements interfaces.Con
         try {
             await transformAndValidate(CreateFeedDto, feed);
             const updatedFeed = await this.updateFeedCommand.run(id, feed);
-            res.status(200).send(updatedFeed);
+            res.status(HttpStatus.NO_CONTENT).send(updatedFeed);
             return
         } catch (errors) {
-            res.status(400).send(errors);
+            res.status(HttpStatus.BAD_REQUEST).send(errors);
             return;
         }
     }
@@ -102,6 +102,6 @@ export class FeedController extends BaseHttpController implements interfaces.Con
     @httpDelete("/:id")
     private async delete(@requestParam("id") id: string, @response() res: express.Response) {
         await this.deleteFeedCommand.run(id);
-        res.sendStatus(204);
+        res.sendStatus(HttpStatus.NO_CONTENT);
     }
 }
