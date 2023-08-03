@@ -149,6 +149,12 @@ docker run -p 3000:3000 --env-file .env dailynews
 
 > **Note**: Please ensure that your .env file contains valid settings for your MongoDB instance (for example, MONGODB_URI and MONGODB_DATABASE), as well as any other environment variables your application requires.
 
+## Running Tests
+
+In order to run the tests correctly, the SSL library version 1.1 is required. If you're unable to install it via your Linux distribution's standard package manager, please visit the following URL: https://pkgs.org/download/libssl1.1.
+
+Here, you'll find the binary file that corresponds to your specific Linux distribution. Download and install the appropriate binary to ensure your tests run correctly.
+
 ## API Documentation Generation
 
 Due to various factors affecting the design of the project, we are using `tsoa` exclusively for the decoration of controllers and the generation of API documentation. `tsoa` cannot be used for any additional functionality within this project.
