@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/alberto-leon-crespo/dailytrends-frameworkless/compare/v1.3.0...v1.4.0) (2023-08-03)
+
+
+### Features
+
+* added swagger auto-doc with tsoa and swagger-ui-express ([3bdeff7](https://github.com/alberto-leon-crespo/dailytrends-frameworkless/commit/3bdeff753de419105a846428ef8cd4e784e46795))
+
 ## [1.3.0](https://github.com/alberto-leon-crespo/dailytrends-frameworkless/compare/v1.1.0...v1.3.0) (2023-08-03)
 
 
