@@ -144,6 +144,23 @@ docker run -p 3000:3000 --env-file .env dailynews
 
 > **Note**: Please ensure that your .env file contains valid settings for your MongoDB instance (for example, MONGODB_URI and MONGODB_DATABASE), as well as any other environment variables your application requires.
 
+## API Documentation Generation
+
+Due to various factors affecting the design of the project, we are using `tsoa` exclusively for the decoration of controllers and the generation of API documentation. `tsoa` cannot be used for any additional functionality within this project.
+
+To generate the API documentation, follow these steps:
+
+1. Decorate the necessary controllers with the `tsoa` decorators. This will allow `tsoa` to introspect these files for generating OpenAPI documentation.
+
+2. Run `npm run generate:swagger`. This will trigger `tsoa` to generate an OpenAPI (Swagger) JSON file based on the decorators added in the previous step.
+
+3. After executing the command, discard the changes made to the controllers in step 1. This is necessary because we are using `tsoa` exclusively for the decoration of controllers and generation of the documentation.
+
+Once you've followed these steps, start your project server. The API documentation will then be accessible at [http://127.0.0.1:3000/api-docs](http://127.0.0.1:3000/api-docs). This provides a user-friendly interface to interact with your API and observe the endpoints, request types, and responses.
+
+Please remember, these steps are necessary each time you make changes to your API and wish to update the generated documentation.
+
+> As we migrate to a system where `tsoa` will also generate routes, this process will be updated accordingly.
 
 ## License
 
