@@ -6,30 +6,40 @@ import {LoggerService} from "../services/logger.service";
 import {ConfigService} from "../services/config.service";
 import {CommonsModule} from "../../commons.module";
 import * as express from 'express';
+import http from "http";
 
 export class ServerBuilder {
-    public static build(container: Container, routingConfig: RoutingConfig): Promise<express.Application> {
+    public static build(container: Container, routingConfig: RoutingConfig, overridePort?: number):
+        Promise<{ app: Express.Application, serverInstance: http.Server }>
+    {
         return new Promise((resolve: any, reject: any) => {
             const server = new InversifyExpressServer(container, null, routingConfig);
 
-            server.setConfig((app) => {
+            server.setConfig((expressApp) => {
                 // add body parser
-                app.use(bodyParser.urlencoded({
+                expressApp.use(bodyParser.urlencoded({
                     extended: true
                 }));
-                app.use(bodyParser.json());
-                app.use(expressPino());
+                expressApp.use(bodyParser.json());
+                expressApp.use(expressPino());
             });
 
             const logger = container.get<LoggerService>(LoggerService);
             const configService = container.get<ConfigService>(ConfigService);
-            const port = configService.getModuleConfig(CommonsModule.name, 'app.port', 3000);
+            let port = configService.getModuleConfig(CommonsModule.name, 'app.port', 3000);
 
-            const serverInstance = server.build();
+            if (overridePort) {
+                port = overridePort;
+            }
 
-            serverInstance.listen(port, 'localhost', () => {
+            const app = server.build();
+
+            const serverInstance = app.listen(port, 'localhost', () => {
                 logger.info(`Server started on port ${port} :)`);
-                resolve(serverInstance);
+                resolve({
+                    app,
+                    serverInstance
+                });
             }).on('error', reject);
         })
     }
